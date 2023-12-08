@@ -2,33 +2,37 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import AddItem from './AddItem'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [newitem, setnewitem] = useState("")
+  const [items,setitems]= useState([])
+
+  function addItem(){
+    const item={
+      id: Math.floor(Math.random()*9999999999),
+      value: newitem
+    }  
+    setitems(oldItems=>[...oldItems,item])
+    setnewitem("");
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className='App'>
+      <h1>To Do List</h1>
+
+      <input type="text" placeholder='Bir görev girin...' value={newitem} onChange={e=>setnewitem(e.target.value)} />
+
+      <button onClick={()=>addItem()}>Ekle</button>
+
+      <ul>
+        {items.map(item=>{
+          return(
+            <li key={item.id}>{item.value}</li>
+          )
+        })}
+      </ul>
+    </div>
   )
 }
 
